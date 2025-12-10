@@ -1,0 +1,296 @@
+
+# Đường dẫn thư mục
+paths:
+  # Dữ liệu huấn luyện
+  training_images: "E:/imagee"
+  training_exports: "./outputs/training_results"
+  
+  # Dữ liệu phân loại (inference)
+  inference_images: "./data/inference_images"
+  inference_exports: "./outputs/classified_images"
+  
+  # Database khuôn mặt để nhận dạng
+  known_faces: "./data/known_faces"
+  
+  # Models
+  models_dir: "./models"
+  rf_model: "./models/random_forest_classifier.pkl"
+  yolo_face_model: "./models/yolov8n-face.pt"
+  scaler: "./models/feature_scaler.pkl"
+  
+  # Metadata EXIF
+  metadata_dir: "./data/metadata"
+
+# ============================
+# Model Configuration
+# ============================
+model:
+  type: "RandomForest"
+  
+  # Random Forest parameters
+  random_forest:
+    n_estimators: 500
+    max_depth: 15
+    min_samples_split: 2
+    min_samples_leaf: 1
+    class_weight: "balanced"
+    random_state: 42
+  
+  # Train/test split
+  test_size: 0.1
+  random_state: 42
+  stratify: true
+  
+  # Feature scaling
+  use_scaler: false  # Random Forest không cần scaling
+
+# ============================
+# Features Configuration
+# ============================
+features:
+  # EXIF-based features
+  exif_features:
+    - FocalLength_35mm
+    - FocusDist_Clean
+    - DoF_Clean
+    - HyperfocalRatio
+    - FNumber
+    - LogShutterSpeed
+    - ISO
+    - LightValue
+    - Hour
+    - Flash_Binary
+  
+  # Vision-based features (face detection)
+  vision_features:
+    - HasFace
+    - NumFaces
+    - FaceAreaRatio
+
+# ============================
+# Face Detection (YOLOv8)
+# ============================
+face_detection:
+  enabled: true
+  
+  # Model settings
+  model_name: "yolov8n-face.pt"
+  device: "cuda"  # "cuda" or "cpu"
+  
+  # Detection parameters
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  
+  # Filtering
+  min_face_size_ratio: 0.02  # Khuôn mặt phải chiếm ít nhất 2% ảnh
+  max_faces: 20  # Giới hạn số khuôn mặt detect tối đa
+  
+  # Performance
+  batch_size: 16
+  half_precision: false  # FP16 for faster inference on GPU
+
+# ============================
+# Face Recognition (DeepFace)
+# ============================
+face_recognition:
+  enabled: true
+  
+  # Model: VGG-Face, Facenet, Facenet512, OpenFace, DeepFace, DeepID, ArcFace, Dlib, SFace
+  model_name: "Facenet512"
+  
+  # Backend detector: opencv, ssd, dlib, mtcnn, retinaface, mediapipe
+  detector_backend: "retinaface"
+  
+  # Matching
+  distance_metric: "cosine"  # cosine, euclidean, euclidean_l2
+  distance_threshold: 0.6  # Ngưỡng để xác định cùng 1 người
+  
+  # Performance
+  enforce_detection: false  # Không throw error nếu không detect được face
+  align: true  # Align face trước khi recognize
+  normalization: "base"  # base, raw, Facenet, Facenet2018, VGGFace, VGGFace2, ArcFace
+
+# ============================
+# Categories Configuration
+# ============================
+categories:
+  - name: "ChanDung"
+    display_name: "Chân Dung"
+    english_name: "Portrait"
+    keywords:
+      - "chandung"
+      - "portrait"
+    description: "Ảnh chân dung có khuôn mặt người"
+    
+  - name: "TinhVat"
+    display_name: "Tĩnh Vật"
+    english_name: "Still Life"
+    keywords:
+      - "tinhvat"
+      - "stilllife"
+      - "macro"
+    description: "Ảnh tĩnh vật, macro, sản phẩm"
+    
+  - name: "TheThao"
+    display_name: "Thể Thao"
+    english_name: "Sports"
+    keywords:
+      - "thethao"
+      - "sport"
+      - "sports"
+    description: "Ảnh thể thao, chuyển động nhanh"
+    
+  - name: "PhongCanh"
+    display_name: "Phong Cảnh"
+    english_name: "Landscape"
+    keywords:
+      - "phongcanh"
+      - "landscape"
+    description: "Ảnh phong cảnh, thiên nhiên, kiến trúc"
+    
+  - name: "DongVat"
+    display_name: "Wildlife"
+    english_name: "Wildlife"
+    keywords:
+      - "dongvat"
+      - "wildlife"
+      - "animal"
+    description: "Ảnh động vật hoang dã"
+
+# ============================
+# Time Buckets
+# ============================
+time_buckets:
+  morning:
+    name: "Sáng"
+    start_hour: 5
+    end_hour: 12
+    light_value_threshold: 10
+    
+  afternoon:
+    name: "Chiều"
+    start_hour: 12
+    end_hour: 18
+    light_value_threshold: 6
+    
+  evening:
+    name: "Tối"
+    start_hour: 18
+    end_hour: 5
+    light_value_threshold: 0
+
+# ============================
+# Classification Rules
+# ============================
+classification_rules:
+  # Phân biệt ChanDung vs TinhVat
+  portrait_vs_stilllife:
+    # Rule 1: Face-based
+    has_face_threshold: 0.05  # Khuôn mặt chiếm >5% ảnh → ChanDung
+    multi_face_threshold: 2   # >=2 khuôn mặt → ChanDung
+    
+    # Rule 2: EXIF-based cho TinhVat (khi không có face)
+    macro_focal_length_min: 90
+    macro_focal_length_max: 105
+    macro_focus_distance_max: 0.5  # meters
+    macro_dof_max: 0.15  # meters
+    
+    stilllife_focal_length_min: 24
+    stilllife_focal_length_max: 85
+    stilllife_focus_distance_max: 2.0  # meters
+
+# ============================
+# Output Configuration
+# ============================
+output:
+  # Folder structure
+  organize_by_person: true  # Tạo thư mục ByPerson cho chân dung
+  organize_by_time: true    # Tạo thư mục Sáng/Chiều/Tối
+  
+  # File naming
+  preserve_original_name: true
+  add_timestamp: false
+  add_category_prefix: false
+  
+  # CSV export
+  export_csv: true
+  csv_columns:
+    - SourceFile
+    - FileName
+    - PredictedLabel
+    - Confidence
+    - TimeBucket
+    - HasFace
+    - NumFaces
+    - RecognizedPeople
+    - DestinationPath
+  
+  # Visualization
+  save_plots: true
+  plot_dpi: 160
+  plot_format: "png"  # png, jpg, svg
+  
+  plots:
+    - label_distribution
+    - feature_importance
+    - confusion_matrix
+
+# ============================
+# Performance & Optimization
+# ============================
+performance:
+  # Multi-threading
+  num_workers: 4  # Số threads xử lý song song
+  
+  # Batch processing
+  batch_size: 32
+  
+  # Memory
+  max_images_in_memory: 100
+  
+  # Caching
+  cache_exif_data: true
+  cache_face_embeddings: true
+
+# ============================
+# Logging
+# ============================
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}"
+  
+  # File logging
+  log_to_file: true
+  log_file: "./logs/photo_classifier.log"
+  rotation: "10 MB"
+  retention: "1 week"
+  
+  # Console logging
+  log_to_console: true
+  colorize: true
+
+# ============================
+# Advanced Options
+# ============================
+advanced:
+  # Duplicate detection
+  detect_duplicates: false
+  duplicate_threshold: 0.95
+  
+  # Image quality filter
+  min_resolution: [640, 480]  # [width, height]
+  max_resolution: [10000, 10000]
+  
+  # File types
+  supported_formats:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".cr3"
+    - ".cr2"
+    - ".nef"
+    - ".arw"
+    - ".dng"
+  
+  # ExifTool
+  exiftool_path: null  # null = auto-detect, or specify path

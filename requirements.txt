@@ -1,0 +1,61 @@
+# Core dependencies
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Computer Vision
+opencv-python>=4.8.0
+ultralytics>=8.0.0  # YOLOv8
+torch>=2.0.0  # PyTorch for YOLOv8
+torchvision>=0.15.0
+
+# Face Recognition
+deepface>=0.0.79
+tf-keras>=2.15.0  # Backend for DeepFace
+mtcnn>=0.1.1  # Face detection backend
+
+# EXIF Processing
+Pillow>=10.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.65.0
+colorama>=0.4.6
+python-dateutil>=2.8.2
+
+# Logging
+loguru>=0.7.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+
+# Development
+black>=23.7.0  # Code formatter
+flake8>=6.1.0  # Linter
+isort>=5.12.0  # Import sorter
+mypy>=1.5.0  # Type checker
+
+# Data download
+gdown>=4.7.1  # Google Drive downloader
+
+# Optional: Web UI
+streamlit>=1.26.0  # For web interface
+gradio>=3.42.0  # Alternative web interface
+
+# Optional: API
+fastapi>=0.103.0
+uvicorn>=0.23.0
+pydantic>=2.3.0
+
+# Optional: Database
+sqlalchemy>=2.0.0  # For storing classification results
