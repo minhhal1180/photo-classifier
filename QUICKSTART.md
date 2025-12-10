@@ -1,6 +1,6 @@
 # Photo Classifier - Quick Start Guide
 
-## 🚀 Cài đặt nhanh
+##  Cài đặt nhanh
 
 ### 1. Cài đặt dependencies
 ```bash
@@ -17,7 +17,7 @@ python scripts/setup_project.py
 python scripts/verify_dataset.py
 ```
 
-## 📚 Sử dụng
+##  Sử dụng
 
 ### Training (Huấn luyện model)
 
@@ -54,7 +54,7 @@ python src/main.py classify --move
 python src/main.py info
 ```
 
-## 📁 Cấu trúc Dataset
+##  Cấu trúc Dataset
 
 ### Training Images
 ```
@@ -83,7 +83,7 @@ data/known_faces/
     └── photo1.jpg
 ```
 
-## ⚙️ Cấu hình
+##  Cấu hình
 
 Chỉnh sửa `config.yaml` để thay đổi:
 - Đường dẫn thư mục
@@ -91,7 +91,7 @@ Chỉnh sửa `config.yaml` để thay đổi:
 - Ngưỡng face detection/recognition
 - Device (cuda/cpu)
 
-## 📊 Output
+##  Output
 
 ### Training
 ```
@@ -115,39 +115,4 @@ outputs/classified_images/YYYYMMDD_HHMMSS/
 └── summary_report.txt          # Báo cáo tổng hợp
 ```
 
-## 🔧 Troubleshooting
 
-### CUDA out of memory
-```yaml
-# Trong config.yaml
-face_detection:
-  device: "cpu"  # Chuyển sang CPU
-```
-
-### ExifTool not found
-- Windows: Download từ https://exiftool.org/
-- Đặt vào PATH hoặc cùng thư mục project
-
-### Model chưa được train
-```bash
-python src/main.py train
-```
-
-### YOLOv8 face model chưa có
-```bash
-# Download thủ công và đặt vào models/yolov8n-face.pt
-# Hoặc sẽ tự động download khi chạy lần đầu
-```
-
-## 📈 Performance Tips
-
-1. **Face detection chậm?** → Giảm batch_size hoặc dùng CPU
-2. **Dataset lớn?** → Dùng `--skip-exif` để không extract lại
-3. **Muốn nhanh hơn?** → Tắt face detection: `--no-face-detect`
-4. **Cần độ chính xác cao hơn?** → Tăng `n_estimators` trong config
-
-## 📞 Support
-
-- Đọc README.md đầy đủ
-- Kiểm tra config.yaml
-- Chạy `python scripts/verify_dataset.py`
