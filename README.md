@@ -1,8 +1,8 @@
-# 📸 Hệ thống Phân loại Ảnh Tự động (AI Photo Classifier)
+#  Hệ thống Phân loại Ảnh Tự động (AI Photo Classifier)
 
 Hệ thống phân loại ảnh thông minh sử dụng Machine Learning (Random Forest) kết hợp Computer Vision (YOLOv8) để tự động phân loại và gán nhãn ảnh theo danh mục và tên người.
 
-## 🎯 Tính năng chính
+##  Tính năng chính
 
 ### 1. Phân loại ảnh theo 5 danh mục
 - **Chân Dung (Portrait)**: Ảnh có khuôn mặt người
@@ -21,7 +21,7 @@ Hệ thống phân loại ảnh thông minh sử dụng Machine Learning (Random
 - **Chiều**: 12:00 - 18:00
 - **Tối**: 18:00 - 5:00
 
-## 📁 Cấu trúc dự án
+##  Cấu trúc dự án
 
 ```
 photo_classifier_project/
@@ -253,7 +253,7 @@ print(result)
 classifier.classify_batch('./data/inference_images')
 ```
 
-## 🔧 Cấu hình
+##  Cấu hình
 
 Chỉnh sửa `config.yaml`:
 
@@ -321,7 +321,7 @@ time_buckets:
     end_hour: 5
 ```
 
-## 📊 Features sử dụng
+##  Features sử dụng
 
 ### EXIF-based Features (10 features)
 1. `FocalLength_35mm` - Tiêu cự quy đổi 35mm
@@ -340,7 +340,7 @@ time_buckets:
 12. `NumFaces` - Số lượng khuôn mặt
 13. `FaceAreaRatio` - Tỷ lệ diện tích khuôn mặt lớn nhất
 
-## 🎯 Độ chính xác
+##  Độ chính xác
 
 ### Trước khi thêm Face Detection (EXIF only)
 - Overall Accuracy: **79%**
@@ -352,7 +352,7 @@ time_buckets:
 - ChanDung F1-score: **~0.90-0.95** ⬆️
 - TinhVat F1-score: **~0.85-0.90** ⬆️
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Chạy tất cả tests
@@ -377,29 +377,3 @@ pytest --cov=src tests/
 - [ ] NSFW detection
 - [ ] Duplicate photo detection
 - [ ] Auto-tagging with CLIP/BLIP
-
-## 🤝 Đóng góp
-
-Mọi đóng góp đều được hoan nghênh! Vui lòng:
-
-1. Fork repository
-2. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Tạo Pull Request
-
-## 📄 License
-
-MIT License - xem file [LICENSE](LICENSE) để biết thêm chi tiết.
-
-## 📧 Liên hệ
-
-- Email: your.email@example.com
-- GitHub: [@your-username](https://github.com/your-username)
-
-## 🙏 Acknowledgments
-
-- [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics) - Face detection
-- [DeepFace](https://github.com/serengil/deepface) - Face recognition
-- [scikit-learn](https://scikit-learn.org/) - Machine Learning
-- [ExifTool](https://exiftool.org/) - EXIF extraction
