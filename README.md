@@ -141,7 +141,7 @@ photo_classifier_project/
     └── add_known_face.py             # Thêm người vào database
 ```
 
-## 🚀 Cài đặt
+##  Cài đặt
 
 ### 1. Yêu cầu hệ thống
 - Python 3.9+
@@ -345,12 +345,12 @@ time_buckets:
 ### Trước khi thêm Face Detection (EXIF only)
 - Overall Accuracy: **79%**
 - ChanDung F1-score: **0.73**
-- TinhVat F1-score: **0.65** ⚠️
+- TinhVat F1-score: **0.65** 
 
 ### Sau khi thêm Face Detection (EXIF + Vision)
-- Overall Accuracy: **~88-92%** (dự kiến)
-- ChanDung F1-score: **~0.90-0.95** ⬆️
-- TinhVat F1-score: **~0.85-0.90** ⬆️
+- Overall Accuracy: **~88-92%**
+- ChanDung F1-score: **~0.90-0.95** 
+- TinhVat F1-score: **~0.85-0.90** 
 
 ##  Testing
 
@@ -364,16 +364,3 @@ pytest tests/test_face_detector.py -v
 # Test với coverage
 pytest --cov=src tests/
 ```
-
-## 📝 TODO
-
-- [ ] Thêm hỗ trợ video (extract frames)
-- [ ] Web UI với Streamlit/Gradio
-- [ ] API REST với FastAPI
-- [ ] Hỗ trợ cloud storage (S3, Google Drive)
-- [ ] Mobile app (React Native)
-- [ ] Thêm categories: Food, Architecture, Street, Event
-- [ ] Face clustering (nhóm ảnh người giống nhau)
-- [ ] NSFW detection
-- [ ] Duplicate photo detection
-- [ ] Auto-tagging with CLIP/BLIP
