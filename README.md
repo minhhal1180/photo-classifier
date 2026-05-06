@@ -1,4 +1,4 @@
-#  Hệ thống Phân loại Ảnh Tự động (AI Photo Classifier)
+#  Hệ thống Phân loại Ảnh Tự động 
 
 Hệ thống phân loại ảnh thông minh sử dụng Machine Learning (Random Forest) phân loại với exif file của ảnh raw kết hợp Computer Vision (YOLOv8) để tự động phân loại và gán nhãn ảnh theo danh mục và tên người.
 
