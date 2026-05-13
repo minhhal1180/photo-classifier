@@ -4,7 +4,7 @@
 
 Dataset đầy đủ (30GB+) được lưu trữ trên Google Drive:
 
-**Download link:** [Sẽ cập nhật sau khi upload]
+**Download link:** 
 
 ### Cấu trúc sau khi giải nén:
 
